@@ -1,0 +1,44 @@
+name: release
+on:
+  release:
+    types: [published]
+
+jobs:
+  publish:
+    permissions:
+      contents: write
+    runs-on: ubuntu-24.04
+    steps:
+      - name: cache
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.gradle/caches
+            ~/.gradle/wrapper
+          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
+          restore-keys: |
+            ${{ runner.os }}-gradle-
+      - name: checkout repository
+        uses: actions/checkout@v4
+      - name: setup jdk
+        uses: actions/setup-java@v4
+        with:
+          java-version: '21'
+          distribution: 'microsoft'
+      - name: make gradle wrapper executable
+        run: chmod +x ./gradlew
+      - name: build and publish
+        run: ./gradlew build publishMods
+        env:
+          BUILD_RELEASE: "true"
+          CHANGELOG: ${{ github.event.release.body }}
+#          MODRINTH_API_KEY: ${{ secrets.MODRINTH_API_KEY }}
+#          CURSEFORGE_API_KEY: ${{ secrets.CURSEFORGE_API_KEY }}
+
+      - name: publish to github
+        uses: Kir-Antipov/mc-publish@v3.3
+        with:
+          github-tag: ${{ github.event.release.tag_name }}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          files: |
+            build/libs/!(*-@(shadow|sources)).jar
