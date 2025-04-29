@@ -87,13 +87,18 @@ tasks.jar {
     }
 }
 
+// see more advanced usages
+// https://modmuss50.github.io/mod-publish-plugin
+// modrinth pat
+// https://modrinth.com/settings/pats
 publishMods {
     val debug = providers.environmentVariable("BUILD_RELEASE").orNull == null
-    dryRun = true
+    dryRun = debug
     file = tasks.remapJar.get().archiveFile
     displayName = "${project.property("mod_name")} v${getModVersion()} for Minecraft ${project.property("minecraft_version")}"
     version = "v${getModVersion()}-mc${project.property("minecraft_version")}"
     changelog = if (debug) "#Test" else providers.environmentVariable("CHANGELOG").get()
+    modLoaders.add("fabric")
     type = when {
         getModVersion().endsWith("alpha") -> ALPHA
         getModVersion().endsWith("beta") -> BETA
@@ -103,8 +108,8 @@ publishMods {
 //        accessToken = providers.environmentVariable("MODRINTH_API_KEY")
 //        projectId = "123456"
 //        minecraftVersionRange {
-//            start = "1.14.4"
-//            end = "latest"
+//            start = project.property("start").toString()
+//            end = project.property("end").toString()
 //        }
 //    }
 }
