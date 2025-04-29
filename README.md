@@ -7,4 +7,4 @@
 
 - 全局搜索`[FUNCTION]`, 设置发布插件
 - 设置完成后在github发布release即可自动向全平台推送, 更改日志即为release的内容.
-- 也可以手动触发action, 需填入release的tag. tag不存在action会自动失败
+- 也可以手动触发release action, 需填入release的tag. tag不存在action会自动失败
