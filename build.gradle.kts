@@ -39,6 +39,12 @@ dependencies {
     modImplementation("net.fabricmc:fabric-loader:${project.property("loader_version")}")
 }
 
+loom {
+    runConfigs.configureEach {
+        vmArgs("-Dmixin.debug.export=true")
+    }
+}
+
 tasks.processResources {
     val modId = project.property("mod_id")
     val modName = project.property("mod_name")
@@ -87,6 +93,7 @@ tasks.jar {
     }
 }
 
+// [FUNCTION]
 // see more advanced usages
 // https://modmuss50.github.io/mod-publish-plugin
 // modrinth pat

@@ -51,6 +51,7 @@ jobs:
         env:
           BUILD_RELEASE: "true"
           CHANGELOG: ${{ steps.getByTag.outputs.body }}
+          # [FUNCTION]
 #          MODRINTH_API_KEY: ${{ secrets.MODRINTH_API_KEY }}
 #          CURSEFORGE_API_KEY: ${{ secrets.CURSEFORGE_API_KEY }}
       - name: publish to github
