@@ -1,5 +1,10 @@
 name: release
 on:
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: "Your release tag"
+        required: true
   release:
     types: [published]
 
@@ -9,6 +14,22 @@ jobs:
       contents: write
     runs-on: ubuntu-24.04
     steps:
+      - name: get tag
+        run: |
+          if [ "${{ github.event_name }}" == "release" ]; then
+            echo "tag=${{ github.event.release.tag_name }}" >> $GITHUB_ENV
+          else
+            echo "tag=${{ github.event.inputs.tag }}" >> $GITHUB_ENV
+          fi
+
+      - name: get release info
+        id: getByTag
+        uses: cardinalby/git-get-release-action@1.2.4
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        with:
+          tag: ${{ env.tag }}
+
       - name: cache
         uses: actions/cache@v4
         with:
@@ -31,14 +52,14 @@ jobs:
         run: ./gradlew build publishMods
         env:
           BUILD_RELEASE: "true"
-          CHANGELOG: ${{ github.event.release.body }}
+          CHANGELOG: ${{ steps.getByTag.outputs.body }}
 #          MODRINTH_API_KEY: ${{ secrets.MODRINTH_API_KEY }}
 #          CURSEFORGE_API_KEY: ${{ secrets.CURSEFORGE_API_KEY }}
 
       - name: publish to github
         uses: Kir-Antipov/mc-publish@v3.3
         with:
-          github-tag: ${{ github.event.release.tag_name }}
+          github-tag: ${{ env.tag }}
           github-token: ${{ secrets.GITHUB_TOKEN }}
           files: |
             build/libs/!(*-@(shadow|sources)).jar
