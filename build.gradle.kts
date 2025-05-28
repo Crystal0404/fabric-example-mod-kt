@@ -115,8 +115,11 @@ publishMods {
 //        accessToken = providers.environmentVariable("MODRINTH_API_KEY")
 //        projectId = "123456"
 //        minecraftVersionRange {
-//            start = project.property("start").toString()
-//            end = project.property("end").toString()
+//            val range = project.property("minecraft_version_range").toString().split(
+//                project.property("split").toString()
+//            )
+//            start = range.first()
+//            end = range.last()
 //        }
 //    }
 }
