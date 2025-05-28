@@ -12,7 +12,7 @@ fun getModVersion(): String {
     var version = project.property("mod_version") as String
     if (System.getenv("BUILD_RELEASE") != "true" && System.getenv("JITPACK") != "true") {
         val buildNumber = System.getenv("GITHUB_RUN_NUMBER")
-        version += if (buildNumber != null) ("+build.$buildNumber") else "-SNAPSHOT"
+        version += if (buildNumber != null) ("-build.$buildNumber") else "-snapshot"
     }
     return version
 }
@@ -48,7 +48,7 @@ loom {
 tasks.processResources {
     val modId = project.property("mod_id")
     val modName = project.property("mod_name")
-    val modVersion = getModVersion()
+    val modVersion = "${getModVersion()}+mc${project.property("minecraft_version")}"
 
     inputs.property("id", modId)
     inputs.property("name", modName)
