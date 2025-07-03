@@ -1,5 +1,5 @@
 plugins {
-    id("fabric-loom").version("1.10-SNAPSHOT")
+    id("fabric-loom").version("1.11-SNAPSHOT")
     id("me.modmuss50.mod-publish-plugin").version("0.8.4")
     id("maven-publish")
 }
@@ -37,6 +37,9 @@ dependencies {
     minecraft("com.mojang:minecraft:${project.property("minecraft_version")}")
     mappings("net.fabricmc:yarn:${project.property("yarn_mappings")}:v2")
     modImplementation("net.fabricmc:fabric-loader:${project.property("loader_version")}")
+
+    // dependence
+//    modImplementation("net.fabricmc.fabric-api:fabric-api:${project.property("fabric_version")}")
 }
 
 loom {
