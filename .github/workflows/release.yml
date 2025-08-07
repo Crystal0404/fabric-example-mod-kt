@@ -60,5 +60,4 @@ jobs:
         uses: softprops/action-gh-release@v2
         with:
           tag_name: ${{ env.tag }}
-          files: |
-            build/libs/*[!sources][!shadow].jar
+          files: build/libs/*[!sources][!shadow].jar
