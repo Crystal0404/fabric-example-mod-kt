@@ -61,6 +61,4 @@ jobs:
         with:
           tag_name: ${{ env.tag }}
           files: |
-            build/libs/*.jar
-            !build/libs/*-sources.jar
-            !build/libs/*-shadow.jar
+            build/libs/*[!sources][!shadow].jar
