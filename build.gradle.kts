@@ -18,7 +18,7 @@ fun getModVersion(): String {
 }
 
 group = "${project.property("maven_group")}"
-version = "v${this.getModVersion()}-mc${project.property("minecraft_version")}"
+version = "v${getModVersion()}-mc${project.property("minecraft_version")}"
 
 repositories {
     // Add repositories to retrieve artifacts from in here.
