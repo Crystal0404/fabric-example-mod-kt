@@ -1,6 +1,6 @@
 plugins {
     id("fabric-loom").version("1.11-SNAPSHOT")
-    id("me.modmuss50.mod-publish-plugin").version("0.8.4")
+    id("me.modmuss50.mod-publish-plugin").version("1.0.0")
     id("maven-publish")
 }
 
@@ -107,12 +107,18 @@ publishMods {
     file = tasks.remapJar.get().archiveFile
     displayName = "${project.property("mod_name")} v${getModVersion()} for Minecraft ${project.property("minecraft_version")}"
     version = "v${getModVersion()}-mc${project.property("minecraft_version")}"
-    changelog = if (debug) "#Test" else providers.environmentVariable("CHANGELOG").get()
+    changelog = if (debug) "## Test" else providers.environmentVariable("CHANGELOG").get()
     modLoaders.add("fabric")
     type = when {
         getModVersion().endsWith("alpha") -> ALPHA
         getModVersion().endsWith("beta") -> BETA
         else -> STABLE
+    }
+    github {
+        accessToken = providers.environmentVariable("GITHUB_TOKEN")
+        repository = if (debug) "test" else providers.environmentVariable("GITHUB_REPOSITORY").get()
+        commitish = if (debug) "test" else providers.environmentVariable("TARGET_COMMITISH").get()
+        tagName = if (debug) "test" else providers.environmentVariable("RELEASE_TAG").get()
     }
 //    modrinth {
 //        accessToken = providers.environmentVariable("MODRINTH_API_KEY")

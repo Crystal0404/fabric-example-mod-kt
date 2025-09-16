@@ -54,7 +54,10 @@ jobs:
       - name: build and publish
         run: ./gradlew build publishMods
         env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           BUILD_RELEASE: 'true'
+          RELEASE_TAG: ${{ steps.get_tag.outputs.tag }}
+          TARGET_COMMITISH: ${{ steps.release_info.outputs.target_commitish }}
           CHANGELOG: ${{ steps.release_info.outputs.body }}
           # [FUNCTION]
 #          MODRINTH_API_KEY: ${{ secrets.MODRINTH_API_KEY }}
