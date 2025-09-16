@@ -18,7 +18,7 @@ fun getModVersion(): String {
 }
 
 group = "${project.property("maven_group")}"
-version = "v${this.getModVersion()}-mc${project.property("minecraft_version")}"
+version = "v${getModVersion()}-mc${project.property("minecraft_version")}"
 
 repositories {
     // Add repositories to retrieve artifacts from in here.
@@ -107,19 +107,12 @@ publishMods {
     file = tasks.remapJar.get().archiveFile
     displayName = "${project.property("mod_name")} v${getModVersion()} for Minecraft ${project.property("minecraft_version")}"
     version = "v${getModVersion()}-mc${project.property("minecraft_version")}"
-    changelog = if (debug) "## Test" else providers.environmentVariable("CHANGELOG").get()
+    changelog = if (debug) "#Test" else providers.environmentVariable("CHANGELOG").get()
     modLoaders.add("fabric")
     type = when {
         getModVersion().endsWith("alpha") -> ALPHA
         getModVersion().endsWith("beta") -> BETA
         else -> STABLE
-    }
-    github {
-        accessToken = providers.environmentVariable("GITHUB_TOKEN")
-        repository = if (debug) "test" else providers.environmentVariable("GITHUB_REPOSITORY").get()
-        commitish = if (debug) "test" else providers.environmentVariable("TARGET_COMMITISH").get()
-        tagName = if (debug) "test" else providers.environmentVariable("RELEASE_TAG").get()
-        allowEmptyFiles = true
     }
 //    modrinth {
 //        accessToken = providers.environmentVariable("MODRINTH_API_KEY")
