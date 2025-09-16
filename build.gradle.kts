@@ -119,6 +119,7 @@ publishMods {
         repository = if (debug) "test" else providers.environmentVariable("GITHUB_REPOSITORY").get()
         commitish = if (debug) "test" else providers.environmentVariable("TARGET_COMMITISH").get()
         tagName = if (debug) "test" else providers.environmentVariable("RELEASE_TAG").get()
+        allowEmptyFiles = true
     }
 //    modrinth {
 //        accessToken = providers.environmentVariable("MODRINTH_API_KEY")
