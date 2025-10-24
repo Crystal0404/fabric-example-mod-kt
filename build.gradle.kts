@@ -1,6 +1,6 @@
 plugins {
     id("fabric-loom").version("1.11-SNAPSHOT")
-    id("me.modmuss50.mod-publish-plugin").version("1.0.0")
+    id("me.modmuss50.mod-publish-plugin").version("1.1.0")
     id("maven-publish")
 }
 
