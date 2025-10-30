@@ -1,5 +1,5 @@
 plugins {
-    id("fabric-loom").version("1.11-SNAPSHOT")
+    id("fabric-loom").version("1.12-SNAPSHOT")
     id("me.modmuss50.mod-publish-plugin").version("1.1.0")
     id("maven-publish")
 }
@@ -26,10 +26,6 @@ repositories {
     // Loom adds the essential maven repositories to download Minecraft and libraries from automatically.
     // See https://docs.gradle.org/current/userguide/declaring_repositories.html
     // for more information about repositories.
-    maven {
-        name = "Fabric"
-        url = uri("https://maven.fabricmc.net/")
-    }
 }
 
 dependencies {
